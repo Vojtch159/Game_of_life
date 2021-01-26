@@ -15,14 +15,7 @@ void update_field(std::vector<std::vector<std::string>> x, int y){
 std::vector<std::vector<std::string>> calculate_field(std::vector<std::vector<std::string>> x, int y) {
     for(int i{0}; i < y; i++){
             for(int j{0}; j < y; j++){
-                if(x[j][i] == "+") {
-                    int g{}; //how many neighbors are alive
-                    //for live cell
-                }
-                else{
-                    int g{}; //how many neighbors are alive
-                   //for dead cell
-                }
+                //need to check how many cells are alive around the current cell, but dk how so i'm fucked :)
             }
         }
     return x;
@@ -47,3 +40,4 @@ int main(){
     }
     return 0;
 }
+
