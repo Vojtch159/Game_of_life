@@ -56,6 +56,7 @@ void calculate_field(int y) {
 int main(){
 
     int y = 5;
+    system("clear");
     update_field(y);
 
     while(true){
