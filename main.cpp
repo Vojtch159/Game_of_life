@@ -3,7 +3,15 @@
 #include <vector>
 #include <string>
 
-void update_field(std::vector<std::vector<std::string>> x, int y){
+std::vector<std::vector<std::string>> x {
+        {"  ", "  ", "  ", "  ", "  "},
+        {"  ", "+", "+", "+", "  "},
+        {"  ", "  ", "+", "+", "  "},
+        {"  ", "+", "  ", "+", "  "},
+        {"  ", "  ", "  ", "  ", "  "},
+    };
+
+void update_field(int y){
         for(int i{0}; i < y; i++){
             for(int j{0}; j < y; j++){
                 std::cout << x[j][i];
@@ -12,32 +20,48 @@ void update_field(std::vector<std::vector<std::string>> x, int y){
         }
 }
 
-std::vector<std::vector<std::string>> calculate_field(std::vector<std::vector<std::string>> x, int y) {
-    for(int i{0}; i < y; i++){
-            for(int j{0}; j < y; j++){
-                //need to check how many cells are alive around the current cell, but dk how so i'm fucked :)
+void calculate_field(int y) {
+    for(int i{1}; i < y-2; i++){
+            for(int j{1}; j < y-2; j++){
+                int g; 
+                if(x[j+1][i] == "+")
+                    g++;
+                if(x[j+1][i+1] == "+")
+                    g++;
+                if(x[j][i+1] == "+")
+                    g++;
+                if(x[j-1][i] == "+")
+                    g++;
+                if(x[j-1][i-1] == "+")
+                    g++;
+                if(x[j][i-1] == "+")
+                    g++;                
+                if(x[j][i] == "+"){
+                    if(g < 2)
+                        x[j][i] = "  ";
+                    if(g >= 2 && g < 4)
+                        x[j][i] = "+" ;  
+                    if(g > 3)
+                        x[j][i] = "  " ;     
+                }else{
+                   if(g > 3)
+                        x[j][i] = "+" ;     
+                }
             }
         }
-    return x;
+    update_field(y);
 }
 
 
 int main(){
 
     int y = 5;
-    std::vector<std::vector<std::string>> field {
-        {"+", "  ", "  ", "  ", "  "},
-        {"  ", "+", "+", "  ", "  "},
-        {"  ", "  ", "  ", "+", "+"},
-        {"  ", "  ", "  ", "+", "+"},
-        {"  ", "  ", "  ", "  ", "+"},
-    };
-    update_field(field, y);
+    update_field(y);
+
     while(true){
-        update_field(calculate_field(field, y), y);
+        calculate_field(y);
         usleep(500000);
         system("clear");
     }
     return 0;
 }
-
